@@ -19,7 +19,8 @@ wire rx_done;
 // Instantiate the counter module
 counter uut_counter (
     .clk(clk),
-    .rst_n(rst_c),
+    .rst_n(rst_n),
+    .rst_c(rst_c),
     .count(count)
 );
 // Instantiate the baud rate generator module

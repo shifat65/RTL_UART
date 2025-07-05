@@ -19,7 +19,8 @@ wire tx_busy;
 // Instantiate the counter module
 counter uut_counter (
     .clk(clk),
-    .rst_n(rst_c),
+    .rst_n(rst_n),
+    .rst_c(rst_c),
     .count(count)
 );
 

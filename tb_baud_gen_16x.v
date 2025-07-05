@@ -11,8 +11,8 @@ wire baud_tick_1x; // Baud tick for 1x clock
 
 counter uut_counter (
     .clk(clk),
-    //.rst_n(rst_n),
-    .rst_n(rst_c),
+    .rst_n(rst_n),
+    .rst_c(rst_c),
     .count(count)
 );
 
