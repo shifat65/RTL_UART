@@ -8,6 +8,9 @@ tx:
 rx:
 	iverilog -o out_rx.vvp tb_rx.v counter.v baud_gen_16x.v uart_rx.v
 	vvp out_rx.vvp
+top:
+	iverilog -o out_top.vvp top.v tb_top.v counter.v baud_gen_16x.v uart_tx.v uart_rx.v
+	vvp out_top.vvp
 
 g_baud:
 	gtkwave --autosave tb_baud_gen_16x.vcd
@@ -15,6 +18,8 @@ g_tx:
 	gtkwave --autosave tb_tx.vcd
 g_rx:
 	gtkwave --autosave tb_rx.vcd
+g_top:
+	gtkwave --autosave tb_top.vcd
 
 clean:
 	rm -f out_baud.vvp out_tx.vvp out_baud.vcd out_tx.vcd

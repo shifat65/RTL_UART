@@ -15,6 +15,7 @@ reg tx_start;
 reg [7:0] tx_data;
 wire tx_line;
 wire tx_busy;
+wire tx_done;
 
 // Instantiate the counter module
 counter uut_counter (
@@ -44,7 +45,8 @@ uart_tx uut_uart_tx (
     .tx_start(tx_start),
     .tx_data(tx_data),
     .tx_line(tx_line),
-    .tx_busy(tx_busy)
+    .tx_busy(tx_busy),
+    .tx_done(tx_done)
 );
 
 always begin

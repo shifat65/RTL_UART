@@ -6,7 +6,8 @@ module uart_tx (
     input wire [7:0] tx_data,      // 8-bit data input
     
     output reg tx_line,             // UART transmit output
-    output reg tx_busy             // Transmission done signal
+    output reg tx_busy,             
+    output reg tx_done      // Transmission done signal
 );
 
 reg [3:0] bit_index;          // Bit index for transmission
@@ -19,12 +20,14 @@ always @(posedge clk, negedge rst_n) begin
         tx_busy <= 1'b0;
         bit_index <= 4'b0;        // Reset bit index
         tx_shift_reg <= 10'b1111111111; // Reset shift register to idle
+        tx_done <= 1'b0;          // Clear done flag
     end 
     else if(tx_start && !tx_busy) begin
         //loading 10 bit frame: start(0) + data(8) + stop(1)
         tx_shift_reg <= {1'b1, tx_data, 1'b0}; // Load data into shift register
         tx_busy <= 1'b1;          // Set busy flag
         bit_index <= 4'b0;        // Reset bit index for transmission
+        tx_done <= 1'b0;          // Clear done flag
     end
     else if(baud_tick_1x && tx_busy) begin
         if(bit_index < 9) begin
@@ -37,6 +40,7 @@ always @(posedge clk, negedge rst_n) begin
             tx_busy <= 1'b0;
             bit_index <= 4'b0; // Reset bit index after transmission
             tx_shift_reg <= 10'b1111111111; // Reset shift register to idle 
+            tx_done <= 1'b1;
         end
     end
 end

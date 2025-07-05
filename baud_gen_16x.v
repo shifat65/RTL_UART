@@ -19,16 +19,19 @@ always @(posedge clk or negedge rst_n) begin
         rst_c <= 1'b1;  // Reset baud tick to low
     end 
     else if (count == baud_div-2) begin
-        baud_tick_16x <= 1'b1;      // Set baud tick high when count matches baud divisor
         rst_c <= 1'b1;
+        baud_tick_16x <= 1'b1;  
+
         if ( baud_count == 4'd15)begin 
-            baud_tick_1x <= 1'b1; // Set baud tick for 1x clock
+            baud_tick_1x <= 1'b1;
+            rst_c <=1'b1; 
             baud_count <= 4'b0;
         end
         else begin
-            baud_count <= baud_count + 1; // Increment baud count
-            baud_tick_1x <= 1'b0; // Keep baud tick for 1
-        end          // Set reset signal high when baud tick is generated
+                
+            baud_count <= baud_count + 1; 
+            baud_tick_1x <= 1'b0; 
+        end          
     end else begin
         rst_c <= 1'b0;          // Keep reset signal low when not generating baud tic
         baud_tick_16x <= 1'b0;  // Otherwise, keep baud tick low
